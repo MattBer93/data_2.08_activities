@@ -75,11 +75,15 @@ join district d on a.district_id = d.A1
 group by d.A2;
 
 -- Get the number of accounts opened by district and year.
-select dense_rank() over(order by d.A2, substring(a.date, 1, 2) desc) as dense_rnk, 
-substring(a.date, 1, 2) as year, d.A2
-from account a
-join district d on a.district_id = d.A1
-order by year, d.A2;
+-- select dense_rank() over(order by d.A2, substring(a.date, 1, 2) desc) as dense_rnk, 
+-- substring(a.date, 1, 2) as year, d.A2
+-- from account a
+-- join district d on a.district_id = d.A1
+-- order by year, d.A2;
+select district_id, substr(date, 1, 2) as year, count(account_id) as accounts_opened
+from account
+group by district_id, year
+order by district_id, year;
 
 
 
